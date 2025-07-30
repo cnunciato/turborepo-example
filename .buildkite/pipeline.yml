@@ -1,0 +1,35 @@
+steps:
+
+  - group: "Without remote caching"
+    steps:
+      - label: ":test_tube: Test"
+        command: |
+          npm install
+          npm test
+
+      - label: ":hammer: Build"
+        command: |
+          npm install
+          npm run build
+
+  - group: "With remote caching"
+    steps:
+      - label: ":test_tube: Test"
+        plugins:
+          - secrets:
+              variables:
+                TURBO_TOKEN: TURBO_TOKEN
+                TURBO_TEAM: TURBO_TEAM
+        command: |
+          npm install
+          npm test
+
+      - label: ":hammer: Build"
+        plugins:
+          - secrets:
+              variables:
+                TURBO_TOKEN: TURBO_TOKEN
+                TURBO_TEAM: TURBO_TEAM
+        command: |
+          npm install
+          npm run build
